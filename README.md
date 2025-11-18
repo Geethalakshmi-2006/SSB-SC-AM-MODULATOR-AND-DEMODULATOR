@@ -57,11 +57,55 @@ Note: Keep all the switch faults in off position
 <img width="747" height="338" alt="image" src="https://github.com/user-attachments/assets/dd117c5d-ee32-47c7-946c-df6180b0d33f" />
 
 ## PROGRAM
+Am = 7;
+Ac = 14;
+fm = 653;
+fc = 6530;
+fs = 653000;
+t = 0:1/fs:2/fm;
+m1 = Am * cos(2 * 3.14 * fm * t);
+subplot(5,1,1);
+plot(t, m1, 'b');
+title('Message Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+c1 = Ac * cos(2 * 3.14 * fc * t);
+subplot(5,1,2);
+plot(t, c1, 'r');
+title('Carrier Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
+m2 = Am * cos(3.14/2 - (2 * 3.14 * fm * t));
+c2 = Ac * cos(3.14/2 - (2 * 3.14 * fc * t));
+s1 = c1 .* m1;
+s2 = c2 .* m2;
+lsb = s1 + s2;
+usb = s1 - s2;
+subplot(5,1,3);
+plot(t, lsb, 'k');
+title('Lower Sideband (LSB)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+subplot(5,1,4);
+plot(t, usb, 'm');
+title('Upper Sideband (USB)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+demod = abs(hilbert(lsb));
+demod = demod - mean(demod);
+subplot(5,1,5);
+plot(t, demod, 'g');
+title('Demodulated Signal');
+xlabel('Time (s)');
+ylabel('Amplitude');
 
 ## TABULATION
+![WhatsApp Image 2025-11-18 at 19 24 27_8a947f5c](https://github.com/user-attachments/assets/a1461fe6-312a-497c-be4b-f4b5da0f8225)
 
 ## OUTPUT
+<img width="710" height="577" alt="image" src="https://github.com/user-attachments/assets/83826e78-7708-45b2-b272-4c70e50b5f65" />
 
 ## RESULT
-
+Thus, the SSB-SC-AM Modulation and Demodulation is experimentally done and the output is verified.
 
